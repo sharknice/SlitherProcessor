@@ -1,4 +1,5 @@
-﻿using SlitherModel.Source;
+﻿using Moq;
+using SlitherModel.Source;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -11,11 +12,13 @@ namespace SlitherProcessor.Tests
 
         public FrameProcessorTests()
         {
-            _frameProcessor = new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor())));
+            var outcomeProcessor = new Mock<IOutcomeProcessor>();
+            var collisionMapProcessor = new Mock<ICollisionMapProcessor>();
+            _frameProcessor = new FrameProcessor(outcomeProcessor.Object, collisionMapProcessor.Object);
         }
 
         [Fact]
-        void time()
+        void Time()
         {
             var now = DateTime.Now;
             var frames = new List<SlitherFrame>();
@@ -31,7 +34,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void snakeLength()
+        void SnakeLength()
         {
             var now = DateTime.Now;
             var frames = new List<SlitherFrame>();
@@ -46,7 +49,7 @@ namespace SlitherProcessor.Tests
             Assert.Equal(2, processedFrame.SnakeLength);
         }
 
-        void collisionMap()
+        void CollisionMap()
         {
             var now = DateTime.Now;
             var frames = new List<SlitherFrame>();
@@ -61,7 +64,7 @@ namespace SlitherProcessor.Tests
             Assert.NotNull(processedFrame.CollisionMap);
         }
 
-        void outcome()
+        void Outcome()
         {
             var now = DateTime.Now;
             var frames = new List<SlitherFrame>();

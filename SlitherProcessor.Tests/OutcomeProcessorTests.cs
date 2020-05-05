@@ -15,7 +15,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void immediateKills()
+        void ImmediateKills()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -30,7 +30,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void shortTermKills()
+        void ShortTermKills()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -45,7 +45,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void longTermKills()
+        void LongTermKills()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -60,7 +60,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void lifeTermKills()
+        void LifeTermKills()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });

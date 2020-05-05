@@ -11,14 +11,14 @@ namespace SlitherProcessor.Tests
 
         public CollisionMapResolutionProcessorTests()
         {
-            _collisionMapResolutionProcessor = new CollisionMapResolutionProcessor(new CollisionSliceProcessor());
+            _collisionMapResolutionProcessor = new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(), new BadCollisionSliceProcessor(), new SelfSliceProcessor()), new SlitherFrameNormalizer());
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();
         }
 
         [Fact]
-        void sliceCount()
+        void SliceCount()
         {
             var collisionMap = _collisionMapResolutionProcessor.ProcessCollisionMap(_slitherFrame, 5, 10);
 
@@ -26,7 +26,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void distanceStep()
+        void DistanceStep()
         {
             var collisionMap = _collisionMapResolutionProcessor.ProcessCollisionMap(_slitherFrame, 5, 10);
 

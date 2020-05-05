@@ -6,5 +6,6 @@ namespace SlitherModel.Processed
     {
         public List<FoodCollision> FoodCollisions { get; set; }
         public List<Collision> BadCollisions { get; set; }
+        public List<Collision> SelfCollisions { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void killScoreExactTime()
+        void KillScoreExactTime()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -30,7 +30,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void killScoreAfterTime()
+        void KillScoreAfterTime()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -42,7 +42,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void killScoreMiddleIndex()
+        void KillScoreMiddleIndex()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -57,7 +57,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void killScoreExceedsTime()
+        void KillScoreExceedsTime()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
@@ -72,7 +72,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void growthScore()
+        void GrowthScore()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { SnakeLength = 0, Time = DateTime.Now });
@@ -87,7 +87,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void growthScoreExceedsTime()
+        void GrowthScoreExceedsTime()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { SnakeLength = 0, Time = DateTime.Now });
@@ -102,7 +102,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void aliveInMiddle()
+        void AliveInMiddle()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Time = DateTime.Now });
@@ -117,7 +117,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void deadAtEnd()
+        void DeadAtEnd()
         {
             var frames = new List<SlitherFrame>();
             frames.Add(new SlitherFrame { Time = DateTime.Now });

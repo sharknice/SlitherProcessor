@@ -5,7 +5,12 @@ using System.Collections.Generic;
 
 namespace SlitherProcessor
 {
-    public class OutcomeProcessor
+    public interface IOutcomeProcessor
+    {
+        Outcome ProcessOutcome(List<SlitherFrame> frames, int index);
+    }
+
+    public class OutcomeProcessor : IOutcomeProcessor
     {
         OutcomeScoreProcessor _outcomeScoreProcessor;
 

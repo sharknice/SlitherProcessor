@@ -1,3 +1,4 @@
+using Moq;
 using SlitherModel.Processed;
 using SlitherModel.Source;
 using System;
@@ -15,7 +16,8 @@ namespace SlitherProcessor.Tests
 
         public GameProcessorTests()
         {
-            _gameProcessor = new GameProcessor(new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor()))));
+            var collisionMapProcessor = new Mock<ICollisionMapProcessor>();
+            _gameProcessor = new GameProcessor(new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), collisionMapProcessor.Object));
             _sourceGame = new Game();
             _sourceGame.Id = "test123";
 

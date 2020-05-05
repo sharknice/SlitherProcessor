@@ -11,14 +11,14 @@ namespace SlitherProcessor.Tests
 
         public CollisionMapProcessorTests()
         {
-            _collisionMapProcessor = new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor()));
+            _collisionMapProcessor = new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(), new BadCollisionSliceProcessor(), new SelfSliceProcessor()), new SlitherFrameNormalizer()));
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();
         }
 
         [Fact]
-        void lowestResolutionSlices()
+        void LowestResolutionSlices()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -26,7 +26,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void lowResolutionSlices()
+        void LowResolutionSlices()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -34,7 +34,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void mediumResolutionSlices()
+        void MediumResolutionSlices()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -42,7 +42,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void highResolutionSlices()
+        void HighResolutionSlices()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -50,7 +50,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void highestResolutionSlices()
+        void HighestResolutionSlices()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -58,7 +58,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void lowestResolutionStep()
+        void LowestResolutionStep()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -66,7 +66,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void lowResolutionStep()
+        void LowResolutionStep()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -74,7 +74,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void mediumResolutionStep()
+        void MediumResolutionStep()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -82,7 +82,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void highResolutionStep()
+        void HighResolutionStep()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 
@@ -90,7 +90,7 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void highestResolutionStep()
+        void HighestResolutionStep()
         {
             var processedFrame = _collisionMapProcessor.ProcessCollision(_slitherFrame);
 

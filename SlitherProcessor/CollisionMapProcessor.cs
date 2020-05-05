@@ -3,7 +3,12 @@ using SlitherModel.Source;
 
 namespace SlitherProcessor
 {
-    public class CollisionMapProcessor
+    public interface ICollisionMapProcessor
+    {
+        CollisionMap ProcessCollision(SlitherFrame slitherFrame);
+    }
+
+    public class CollisionMapProcessor: ICollisionMapProcessor
     {
         private readonly CollisionMapResolutionProcessor _collisionMapResolutionProcessor;
 

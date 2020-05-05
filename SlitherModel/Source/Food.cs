@@ -16,10 +16,10 @@ namespace SlitherModel.Source
         public long Id { get; set; }
 
         [JsonProperty("xx")]
-        public long Xx { get; set; }
+        public double Xx { get; set; }
 
         [JsonProperty("yy")]
-        public long Yy { get; set; }
+        public double Yy { get; set; }
 
         [JsonProperty("rx")]
         public double Rx { get; set; }

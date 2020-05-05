@@ -6,10 +6,10 @@ namespace SlitherProcessor
 {
     public class FrameProcessor
     {
-        private readonly OutcomeProcessor _outcomeProcessor;
-        private readonly CollisionMapProcessor _collisionMapProcessor;
+        private readonly IOutcomeProcessor _outcomeProcessor;
+        private readonly ICollisionMapProcessor _collisionMapProcessor;
 
-        public FrameProcessor(OutcomeProcessor outcomeProcessor, CollisionMapProcessor collisionMapProcessor)
+        public FrameProcessor(IOutcomeProcessor outcomeProcessor, ICollisionMapProcessor collisionMapProcessor)
         {
             _collisionMapProcessor = collisionMapProcessor;
             _outcomeProcessor = outcomeProcessor;

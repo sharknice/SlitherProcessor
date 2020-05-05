@@ -92,10 +92,10 @@ namespace SlitherModel.Source
         public double Cv { get; set; }
 
         [JsonProperty("fdhc")]
-        public double Fdhc { get; set; }
+        public double? Fdhc { get; set; }
 
         [JsonProperty("fdtc")]
-        public double Fdtc { get; set; }
+        public double? Fdtc { get; set; }
 
         [JsonProperty("fdl")]
         public double Fdl { get; set; }
