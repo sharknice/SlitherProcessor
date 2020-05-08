@@ -17,7 +17,23 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void Stuff()
+        void EnemySnakeHead()
+        {
+            var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
+
+            Assert.Equal(8, slice.Count);
+        }
+
+        [Fact]
+        void EnemySnakeBody()
+        {
+            var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
+
+            Assert.Equal(8, slice.Count);
+        }
+
+        [Fact]
+        void EndOfTheWorld()
         {
             var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
 
