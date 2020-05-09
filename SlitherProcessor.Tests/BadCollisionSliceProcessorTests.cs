@@ -10,7 +10,7 @@ namespace SlitherProcessor.Tests
 
         public BadCollisionSliceProcessorTests()
         {
-            _badCollisionSliceProcessor = new BadCollisionSliceProcessor();
+            _badCollisionSliceProcessor = new BadCollisionSliceProcessor(new CollisionService());
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();
@@ -37,7 +37,7 @@ namespace SlitherProcessor.Tests
         {
             var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
 
-            Assert.Equal(8, slice.Count);
+            Assert.Single(slice);
         }
     }
 }

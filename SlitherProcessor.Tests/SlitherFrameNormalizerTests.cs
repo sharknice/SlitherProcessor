@@ -1,4 +1,5 @@
 ﻿using SlitherModel.Source;
+using System;
 using Xunit;
 
 namespace SlitherProcessor.Tests
@@ -110,6 +111,94 @@ namespace SlitherProcessor.Tests
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
             Assert.Equal(3, normalizedFrame.Foods[2].Yy);
+        }
+
+        [Fact]
+        void WorldMinXTranslated()
+        {
+            _slitherFrame.Snake.Xx = 0;
+            _slitherFrame.Snake.Yy = 0;
+            _slitherFrame.Snake.Ang = 0;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(21600, normalizedFrame.WorldCenter.x);
+        }
+
+        [Fact]
+        void WorldMinYTranslated()
+        {
+            _slitherFrame.Snake.Xx = 0;
+            _slitherFrame.Snake.Yy = 0;
+            _slitherFrame.Snake.Ang = 0;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(21600, normalizedFrame.WorldCenter.y);
+        }
+
+        [Fact]
+        void WorldXMiddleTranslated()
+        {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(0, normalizedFrame.WorldCenter.x);
+        }
+
+        [Fact]
+        void WorldYMiddleTranslated()
+        {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(0, normalizedFrame.WorldCenter.y);
+        }
+
+        [Fact]
+        void WorldXMaxTranslated()
+        {
+            _slitherFrame.Snake.Xx = 43200;
+            _slitherFrame.Snake.Yy = 43200;
+            _slitherFrame.Snake.Ang = 0;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(-21600, normalizedFrame.WorldCenter.x);
+        }
+
+        [Fact]
+        void WorldYMaxTranslated()
+        {
+            _slitherFrame.Snake.Xx = 43200;
+            _slitherFrame.Snake.Yy = 43200;
+            _slitherFrame.Snake.Ang = 0;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(-21600, normalizedFrame.WorldCenter.y);
+        }
+
+        [Fact]
+        void WorldXTranslatedWithAngle()
+        {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 0;
+            _slitherFrame.Snake.Ang = Math.PI;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(-21600, normalizedFrame.WorldCenter.x); // TODO: not sure what this should be
+        }
+
+        [Fact]
+        void WorldYTranslatedWithAngle()
+        {
+            _slitherFrame.Snake.Xx = 0;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = Math.PI;
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(-21600, normalizedFrame.WorldCenter.y); // TODO: not sure what this should be
         }
     }
 }

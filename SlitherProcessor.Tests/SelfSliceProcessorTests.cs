@@ -10,7 +10,7 @@ namespace SlitherProcessor.Tests
 
         public SelfSliceProcessorTests()
         {
-            _selfSliceProcessor = new SelfSliceProcessor();
+            _selfSliceProcessor = new SelfSliceProcessor(new CollisionService());
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();

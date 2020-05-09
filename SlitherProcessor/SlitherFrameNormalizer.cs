@@ -1,11 +1,13 @@
-﻿using SlitherModel.Source;
-using System;
+﻿using SlitherModel;
+using SlitherModel.Source;
 using System.Collections.Generic;
 
 namespace SlitherProcessor
 {
     public class SlitherFrameNormalizer
     {
+        int worldRadius = 21600;
+
         /// <summary>
         /// normalize the map so the snake angle is 0
         /// </summary>
@@ -21,6 +23,7 @@ namespace SlitherProcessor
             normalizedFrame.Snake = GetNormalizedSnake(slitherFrame.Snake, anchorPoint, angleChange);
             normalizedFrame.Snakes = GetNormalizedSnakes(slitherFrame.Snakes, anchorPoint, angleChange);
             normalizedFrame.Foods = GetNormalizedFoods(slitherFrame.Foods, anchorPoint, angleChange);
+            normalizedFrame.WorldCenter = NormalizeCoordinates(slitherFrame.WorldCenter, anchorPoint, angleChange);
 
             return normalizedFrame;
         }
@@ -78,7 +81,9 @@ namespace SlitherProcessor
 
         private Coordinates NormalizeCoordinates(Coordinates sourcePoint, Coordinates anchorPoint, double angleChange)
         {
-            return sourcePoint;
+            var coordinates = new Coordinates { x = worldRadius - anchorPoint.x, y = worldRadius - anchorPoint.y };
+            // TODO: rotate around anchorpoint with angle and stuff
+            return coordinates;
         }
     }
 }

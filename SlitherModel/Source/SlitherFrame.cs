@@ -11,5 +11,6 @@ namespace SlitherModel.Source
         public List<Food> Foods { get; set; }
         public int Kills { get; set; }
         public int SnakeLength { get; set; }
+        public Coordinates WorldCenter { get; set; }
     }
 }

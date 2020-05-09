@@ -1,4 +1,4 @@
-﻿namespace SlitherProcessor
+﻿namespace SlitherModel
 {
     public class Coordinates
     {
