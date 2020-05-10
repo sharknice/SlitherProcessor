@@ -1,5 +1,6 @@
 ﻿using SlitherModel;
 using SlitherModel.Source;
+using System;
 using System.Collections.Generic;
 
 namespace SlitherProcessor
@@ -9,21 +10,26 @@ namespace SlitherProcessor
         int worldRadius = 21600;
 
         /// <summary>
-        /// normalize the map so the snake angle is 0
+        /// normalize the map so the snake angle is 0 and the snake point is 0,0
         /// </summary>
         /// <param name="slitherFrame"></param>
         /// <returns></returns>
         public SlitherFrame NormalizeFrame(SlitherFrame slitherFrame)
         {
             var angleChange = -slitherFrame.Snake.Ang;
-            var anchorPoint = new Coordinates { x = slitherFrame.Snake.Xx, y = slitherFrame.Snake.Yy };
+            var centerShiftedPoint = new Coordinates { x = worldRadius - slitherFrame.Snake.Xx, y = worldRadius - slitherFrame.Snake.Yy };
+            var pointChange = new Coordinates { x = worldRadius - centerShiftedPoint.x, y = worldRadius - centerShiftedPoint.y };
 
             var normalizedFrame = new SlitherFrame();
 
-            normalizedFrame.Snake = GetNormalizedSnake(slitherFrame.Snake, anchorPoint, angleChange);
-            normalizedFrame.Snakes = GetNormalizedSnakes(slitherFrame.Snakes, anchorPoint, angleChange);
-            normalizedFrame.Foods = GetNormalizedFoods(slitherFrame.Foods, anchorPoint, angleChange);
-            normalizedFrame.WorldCenter = NormalizeCoordinates(slitherFrame.WorldCenter, anchorPoint, angleChange);
+            normalizedFrame.Snake = GetNormalizedSnake(slitherFrame.Snake, pointChange, angleChange);
+            normalizedFrame.Snakes = GetNormalizedSnakes(slitherFrame.Snakes, pointChange, angleChange);
+            normalizedFrame.Foods = GetNormalizedFoods(slitherFrame.Foods, pointChange, angleChange);
+            normalizedFrame.WorldCenter = RotateCoordinates(centerShiftedPoint, angleChange);
+
+            normalizedFrame.Kills = slitherFrame.Kills;
+            normalizedFrame.SnakeLength = slitherFrame.SnakeLength;
+            normalizedFrame.Time = slitherFrame.Time;
 
             return normalizedFrame;
         }
@@ -48,7 +54,7 @@ namespace SlitherProcessor
             return snakes;
         }
 
-        private Snake GetNormalizedSnake(Snake snake, Coordinates anchorPoint, double angleChange)
+        private Snake GetNormalizedSnake(Snake snake, Coordinates pointChange, double angleChange)
         {
             snake.Ang = 0;
             snake.Xx = 0;
@@ -56,7 +62,7 @@ namespace SlitherProcessor
 
             for(int index = 0; index < snake.Pts.Count; index++)
             {
-                var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = snake.Pts[index].Xx, y = snake.Pts[index].Yy }, anchorPoint, angleChange);
+                var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = snake.Pts[index].Xx, y = snake.Pts[index].Yy }, pointChange, angleChange);
                 snake.Pts[index].Xx = normalizedCoordinates.x;
                 snake.Pts[index].Yy = normalizedCoordinates.y;
             }
@@ -64,13 +70,13 @@ namespace SlitherProcessor
             return snake;
         }
 
-        private List<Food> GetNormalizedFoods(List<Food> foods, Coordinates anchorPoint, double angleChange)
+        private List<Food> GetNormalizedFoods(List<Food> foods, Coordinates pointChange, double angleChange)
         {
             for (int index = 0; index < foods.Count; index++)
             {
                 if (foods[index] != null)
                 {
-                    var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = foods[index].Xx, y = foods[index].Yy }, anchorPoint, angleChange);
+                    var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = foods[index].Xx, y = foods[index].Yy }, pointChange, angleChange);
                     foods[index].Xx = normalizedCoordinates.x;
                     foods[index].Yy = normalizedCoordinates.y;
                 }
@@ -79,11 +85,17 @@ namespace SlitherProcessor
             return foods;
         }
 
-        private Coordinates NormalizeCoordinates(Coordinates sourcePoint, Coordinates anchorPoint, double angleChange)
+        private Coordinates NormalizeCoordinates(Coordinates sourcePoint, Coordinates pointChange, double angleChange)
         {
-            var coordinates = new Coordinates { x = worldRadius - anchorPoint.x, y = worldRadius - anchorPoint.y };
-            // TODO: rotate around anchorpoint with angle and stuff
-            return coordinates;
+            var shiftedCoordinates = new Coordinates { x = sourcePoint.x - pointChange.x, y = sourcePoint.y - pointChange.y };
+            return RotateCoordinates(shiftedCoordinates, angleChange);
+        }
+
+        private Coordinates RotateCoordinates(Coordinates shiftedCoordinates, double angleChange)
+        {
+            var x = (shiftedCoordinates.x * Math.Cos(angleChange)) - (shiftedCoordinates.y * Math.Sin(angleChange));
+            var y = (shiftedCoordinates.y * Math.Cos(angleChange)) + (shiftedCoordinates.x * Math.Sin(angleChange));
+            return new Coordinates { x = Math.Round(x), y = Math.Round(y) };
         }
     }
 }

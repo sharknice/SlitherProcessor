@@ -11,7 +11,7 @@ namespace SlitherProcessor.Tests
 
         public FoodSliceProcessorTests()
         {
-            _foodSliceProcessor = new FoodSliceProcessor();
+            _foodSliceProcessor = new FoodSliceProcessor(new CollisionService());
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();
@@ -21,9 +21,9 @@ namespace SlitherProcessor.Tests
         void HasFood()
         {
             _slitherFrame.Foods = new List<Food>();
-            _slitherFrame.Foods.Add(new Food { Xx = 0, Yy = 111 });
-            _slitherFrame.Foods.Add(new Food { Xx = 0, Yy = 9 });
-            _slitherFrame.Foods.Add(new Food { Xx = 0, Yy = -100 });
+            _slitherFrame.Foods.Add(new Food { Xx = 112, Yy = 0 });
+            _slitherFrame.Foods.Add(new Food { Xx = 9, Yy = 0 });
+            _slitherFrame.Foods.Add(new Food { Xx = -100, Yy = 0 });
 
             var slice = _foodSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
 
@@ -34,7 +34,7 @@ namespace SlitherProcessor.Tests
         void FoodDistanceRoundDown()
         {
             _slitherFrame.Foods = new List<Food>();
-            _slitherFrame.Foods.Add(new Food { Xx = 0, Yy = 111 });
+            _slitherFrame.Foods.Add(new Food { Xx = 112, Yy = 0 });
 
             var slice = _foodSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
 
@@ -45,7 +45,7 @@ namespace SlitherProcessor.Tests
         void FoodDistanceRoundUp()
         {
             _slitherFrame.Foods = new List<Food>();
-            _slitherFrame.Foods.Add(new Food { Xx = 0, Yy = 165 });
+            _slitherFrame.Foods.Add(new Food { Xx = 165, Yy = 0 });
 
             var slice = _foodSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 100);
 

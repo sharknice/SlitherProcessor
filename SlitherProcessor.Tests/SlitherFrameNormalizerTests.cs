@@ -1,5 +1,6 @@
 ﻿using SlitherModel.Source;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace SlitherProcessor.Tests
@@ -60,33 +61,49 @@ namespace SlitherProcessor.Tests
         [Fact]
         void SnakePointsXxTranslated()
         {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Snake.Pts = new List<Lnp> { new Lnp { Xx = 21600, Yy = 21600 }, new Lnp { Xx = 21700, Yy = 21600 } };
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Snake.Pts[2].Xx);
+            Assert.Equal(100, normalizedFrame.Snake.Pts[1].Xx);
         }
 
         [Fact]
         void SnakePointsYyTranslated()
         {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Snake.Pts = new List<Lnp> { new Lnp { Xx = 21600, Yy = 21600 }, new Lnp { Xx = 21600, Yy = 21700 } };
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Snake.Pts[2].Yy);
+            Assert.Equal(100, normalizedFrame.Snake.Pts[1].Yy);
         }
 
         [Fact]
         void SnakesPointsXxTranslated()
         {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Snakes[2].Pts = new List<Lnp> { new Lnp { Xx = 21600, Yy = 21600 }, new Lnp { Xx = 21700, Yy = 21600 } };
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Snakes[2].Pts[2].Xx);
+            Assert.Equal(100, normalizedFrame.Snakes[2].Pts[1].Xx);
         }
 
         [Fact]
         void SnakesPointsYyTranslated()
         {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Snakes[2].Pts = new List<Lnp> { new Lnp { Xx = 21600, Yy = 21600 }, new Lnp { Xx = 21600, Yy = 21700 } };
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Snakes[2].Pts[2].Yy);
+            Assert.Equal(100, normalizedFrame.Snakes[2].Pts[1].Yy);
         }
 
         [Fact]
@@ -187,7 +204,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = Math.PI;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(-21600, normalizedFrame.WorldCenter.x); // TODO: not sure what this should be
+            Assert.Equal(0, normalizedFrame.WorldCenter.x);
         }
 
         [Fact]
@@ -198,7 +215,31 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = Math.PI;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(-21600, normalizedFrame.WorldCenter.y); // TODO: not sure what this should be
+            Assert.Equal(0, normalizedFrame.WorldCenter.y);
+        }
+
+        [Fact]
+        void Kills()
+        {
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(_slitherFrame.Kills, normalizedFrame.Kills);
+        }
+
+        [Fact]
+        void SnakeLength()
+        {
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(_slitherFrame.SnakeLength, normalizedFrame.SnakeLength);
+        }
+
+        [Fact]
+        void Time()
+        {
+            var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
+
+            Assert.Equal(_slitherFrame.Time, normalizedFrame.Time);
         }
     }
 }

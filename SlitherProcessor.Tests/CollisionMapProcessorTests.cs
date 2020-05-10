@@ -11,7 +11,7 @@ namespace SlitherProcessor.Tests
 
         public CollisionMapProcessorTests()
         {
-            _collisionMapProcessor = new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer());
+            _collisionMapProcessor = new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer());
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();

@@ -13,7 +13,7 @@ namespace SlitherProcessor.Tests
 
         public CollisionSliceProcessorTests()
         {
-            _collisionSliceProcessor = new CollisionSliceProcessor(new FoodSliceProcessor(), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()));
+            _collisionSliceProcessor = new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()));
 
             var testFrame = new TestFrame();
             _slitherFrame = testFrame.GetTestFrame();
