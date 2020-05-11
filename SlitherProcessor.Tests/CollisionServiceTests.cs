@@ -14,7 +14,7 @@ namespace SlitherProcessor.Tests
         [Fact]
         void RoundsDown()
         {
-            var distance = _collisionService.GetDistance(0, 111, 1, 0, .5, 10);
+            var distance = _collisionService.GetDistance(112, 0, 1, 0, .5, 10);
 
             Assert.Equal(110, distance);
         }
@@ -22,7 +22,7 @@ namespace SlitherProcessor.Tests
         [Fact]
         void RoundsUp()
         {
-            var distance = _collisionService.GetDistance(0, 165, 1, 0, .5, 100);
+            var distance = _collisionService.GetDistance(165, 0, 1, 0, .5, 100);
 
             Assert.Equal(200, distance);
         }
@@ -30,7 +30,7 @@ namespace SlitherProcessor.Tests
         [Fact]
         void NullForNothing()
         {
-            var distance = _collisionService.GetDistance(0, -165, 1, 0, .5, 100);
+            var distance = _collisionService.GetDistance(-165, 0, 1, 0, .5, 100);
 
             Assert.Null(distance);
         }

@@ -1,7 +1,5 @@
 ﻿using SlitherModel.Source;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace SlitherProcessor.Tests
@@ -30,9 +28,14 @@ namespace SlitherProcessor.Tests
         [Fact]
         void FoodCollisions()
         {
+            _slitherFrame.Foods = new List<Food>();
+            _slitherFrame.Foods.Add(new Food { Xx = 112, Yy = 0 });
+            _slitherFrame.Foods.Add(new Food { Xx = 9, Yy = 0 });
+            _slitherFrame.Foods.Add(new Food { Xx = -100, Yy = 0 });
+
             var slice = _collisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
 
-            Assert.NotNull(slice.FoodCollisions);
+            Assert.Equal(2, slice.FoodCollisions.Count);
         }
     }
 }

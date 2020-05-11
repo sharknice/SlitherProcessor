@@ -19,10 +19,13 @@ namespace SlitherProcessor
 
             foreach(var food in slitherFrame.Foods)
             {
-                var distance = _collisionService.GetDistance(food.Xx, food.Yy, 1, angleStart, angleEnd, distanceStep);
-                if(distance != null)
+                if (food != null)
                 {
-                    foods.Add(new FoodCollision { Distance = distance.Value, Size = 1 }); // TODO: get food size
+                    var distance = _collisionService.GetDistance(food.Xx, food.Yy, 1, angleStart, angleEnd, distanceStep);
+                    if (distance != null)
+                    {
+                        foods.Add(new FoodCollision { Distance = distance.Value, Size = 1 }); // TODO: get food size
+                    }
                 }
             }
 

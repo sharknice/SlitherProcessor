@@ -72,7 +72,8 @@ namespace SlitherProcessor
         double GetDistance(double x, double y, double radius, int distanceStep)
         {
             var distance = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2)) - radius;
-            return distance; // TODO: use distanceStep to round
+
+            return Math.Round(distance / distanceStep, 0) * distanceStep;
         }
     }
 }

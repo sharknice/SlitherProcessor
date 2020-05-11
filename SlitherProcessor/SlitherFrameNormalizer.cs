@@ -7,7 +7,7 @@ namespace SlitherProcessor
 {
     public class SlitherFrameNormalizer
     {
-        int worldRadius = 21600;
+        private readonly int worldRadius = 21600;
 
         /// <summary>
         /// normalize the map so the snake angle is 0 and the snake point is 0,0
@@ -41,7 +41,16 @@ namespace SlitherProcessor
                 var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = snakes[index].Xx, y = snakes[index].Yy }, anchorPoint, angleChange);
                 snakes[index].Xx = normalizedCoordinates.x;
                 snakes[index].Yy = normalizedCoordinates.y;
-                // TODO: snakes[index].Ang = ??
+                snakes[index].Ang += angleChange;
+                var twoPi = Math.PI * 2;
+                if (snakes[index].Ang > twoPi)
+                {
+                    snakes[index].Ang -= twoPi;
+                }
+                if(snakes[index].Ang < 0)
+                {
+                    snakes[index].Ang += twoPi;
+                }
 
                 for (int pointIndex = 0; pointIndex < snakes[index].Pts.Count; pointIndex++)
                 {

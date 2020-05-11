@@ -109,25 +109,35 @@ namespace SlitherProcessor.Tests
         [Fact]
         void SnakesAnglesTranslated()
         {
+            _slitherFrame.Snake.Ang = .5;
+            _slitherFrame.Snakes[2].Ang = .5;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Snakes[2].Ang);
+            Assert.Equal(0, normalizedFrame.Snakes[2].Ang);
         }
 
         [Fact]
         void FoodXxTranslated()
         {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Foods = new List<Food> { new Food { Xx = 21600, Yy = 21600 }, new Food { Xx = 21700, Yy = 21600 } };
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Foods[2].Xx);
+            Assert.Equal(100, normalizedFrame.Foods[1].Xx);
         }
 
         [Fact]
         void FoodYyTranslated()
         {
+            _slitherFrame.Snake.Xx = 21600;
+            _slitherFrame.Snake.Yy = 21600;
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Foods = new List<Food> { new Food { Xx = 21600, Yy = 21600 }, new Food { Xx = 21600, Yy = 21700 } };
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(3, normalizedFrame.Foods[2].Yy);
+            Assert.Equal(100, normalizedFrame.Foods[1].Yy);
         }
 
         [Fact]
