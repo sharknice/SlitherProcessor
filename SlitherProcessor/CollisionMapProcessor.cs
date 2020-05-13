@@ -21,7 +21,6 @@ namespace SlitherProcessor
 
         public CollisionMap ProcessCollision(SlitherFrame slitherFrame)
         {
-            // TODO: get end of the world collision then normalize it (can't get it after normalization)
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(slitherFrame);
 
             return new CollisionMap

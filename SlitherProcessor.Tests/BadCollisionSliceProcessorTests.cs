@@ -1,5 +1,6 @@
 ﻿using SlitherModel.Processed.BadCollision;
 using SlitherModel.Source;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -48,6 +49,34 @@ namespace SlitherProcessor.Tests
             var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
 
             Assert.Single(slice);
+        }
+
+        [Fact]
+        void EndOfTheWorldDistance()
+        {
+            _slitherFrame.Snake.Ang = 0;
+            _slitherFrame.Snake.Xx = 0;
+            _slitherFrame.Snake.Yy = 0;
+            _slitherFrame.Snake.Sc = 0;
+            _slitherFrame.WorldCenter.X = 100;
+            _slitherFrame.WorldCenter.Y = 0;
+            var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
+
+            Assert.Equal(21500, slice.Where(c => c.GetType() == typeof(Boundry)).First().Distance);
+        }
+
+        [Fact]
+        void EndOfTheWorldLeftDistance()
+        {
+            _slitherFrame.Snake.Ang = Math.PI;
+            _slitherFrame.Snake.Xx = 0;
+            _slitherFrame.Snake.Yy = 0;
+            _slitherFrame.Snake.Sc = 0;
+            _slitherFrame.WorldCenter.X = 100;
+            _slitherFrame.WorldCenter.Y = 0;
+            var slice = _badCollisionSliceProcessor.ProcessSlice(_slitherFrame, 0, .1, 10);
+
+            Assert.Equal(21700, slice.Where(c => c.GetType() == typeof(Boundry)).First().Distance);
         }
     }
 }

@@ -2,6 +2,7 @@
 using SlitherModel.Processed;
 using SlitherModel.Processed.BadCollision;
 using SlitherModel.Source;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,7 +47,7 @@ namespace SlitherProcessor
                 }
             }
 
-            collision.Add(new Boundry { Distance = GetBoundryDistance(slitherFrame.WorldCenter, selfRadius) });
+            collision.Add(new Boundry { Distance = GetBoundryDistance(slitherFrame.WorldCenter, selfRadius, angleStart, angleEnd, distanceStep) });
 
             return collision;
         }
@@ -56,10 +57,51 @@ namespace SlitherProcessor
             return snake.Sc * 14.5;
         }
 
-        private double GetBoundryDistance(Coordinates worldCenter, double selfRadius)
+        private double GetBoundryDistance(Coordinates worldCenter, double selfRadius, double angleStart, double angleEnd, int distanceStep)
         {
             // TODO: collision with circle from world center with radius worldRadius
-            return 0;
+            // return the closer angle of start and end
+            // given center point and radius of circle, starting point and angle of vector inside the circle.  Find the intersection
+            // (x - h)²+(mx + b - k)²= r
+            // solve for x, plug in to get y
+            
+            var start = FindLineCircleIntersections(worldCenter, angleStart);
+            var distance = Math.Sqrt(Math.Pow(start.X, 2) + Math.Pow(start.Y, 2));
+            var end = FindLineCircleIntersections(worldCenter, angleEnd);
+            var endDistance = Math.Sqrt(Math.Pow(end.X, 2) + Math.Pow(end.Y, 2));
+            if (endDistance < distance)
+            {
+                distance = endDistance;
+            }
+            distance -= selfRadius;
+
+            return Math.Round(distance / distanceStep, 0) * distanceStep;
+        }
+
+        private Coordinates FindLineCircleIntersections(Coordinates worldCenter, double angle)
+        {
+            double dx = Math.Sin(angle) * 100.0;
+            double dy = Math.Cos(angle) * 100.0;
+
+            double A = dx * dx + dy * dy;
+            double B = 2 * (dx * (- worldCenter.X) + dy * (- worldCenter.Y));
+            double C = (-worldCenter.X) * (-worldCenter.X) +
+                (-worldCenter.Y) * (-worldCenter.Y) -
+                worldRadius * worldRadius;
+
+            double det = B * B - 4 * A * C;
+
+            double t = (float)((-B + Math.Sqrt(det)) / (2 * A));
+            var intersection1 = new Coordinates { X = t * dx, Y = t * dy };
+            t = (float)((-B - Math.Sqrt(det)) / (2 * A));
+            var intersection2 = new Coordinates { X = t * dx, Y = t * dy };
+
+            if((dx < 0 && intersection2.X < 0) || (dx > 0 && intersection2.X > 0) || (dy < 0 && intersection2.Y < 0) || (dy > 0 && intersection2.Y > 0))
+            {
+                return intersection2;
+            }
+
+            return intersection1;
         }
     }
 }

@@ -17,8 +17,8 @@ namespace SlitherProcessor
         public SlitherFrame NormalizeFrame(SlitherFrame slitherFrame)
         {
             var angleChange = -slitherFrame.Snake.Ang;
-            var centerShiftedPoint = new Coordinates { x = worldRadius - slitherFrame.Snake.Xx, y = worldRadius - slitherFrame.Snake.Yy };
-            var pointChange = new Coordinates { x = worldRadius - centerShiftedPoint.x, y = worldRadius - centerShiftedPoint.y };
+            var centerShiftedPoint = new Coordinates { X = worldRadius - slitherFrame.Snake.Xx, Y = worldRadius - slitherFrame.Snake.Yy };
+            var pointChange = new Coordinates { X = worldRadius - centerShiftedPoint.X, Y = worldRadius - centerShiftedPoint.Y };
 
             var normalizedFrame = new SlitherFrame();
 
@@ -38,9 +38,9 @@ namespace SlitherProcessor
         {
             for (int index = 0; index < snakes.Count; index++)
             {
-                var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = snakes[index].Xx, y = snakes[index].Yy }, anchorPoint, angleChange);
-                snakes[index].Xx = normalizedCoordinates.x;
-                snakes[index].Yy = normalizedCoordinates.y;
+                var normalizedCoordinates = NormalizeCoordinates(new Coordinates { X = snakes[index].Xx, Y = snakes[index].Yy }, anchorPoint, angleChange);
+                snakes[index].Xx = normalizedCoordinates.X;
+                snakes[index].Yy = normalizedCoordinates.Y;
                 snakes[index].Ang += angleChange;
                 var twoPi = Math.PI * 2;
                 if (snakes[index].Ang > twoPi)
@@ -54,9 +54,9 @@ namespace SlitherProcessor
 
                 for (int pointIndex = 0; pointIndex < snakes[index].Pts.Count; pointIndex++)
                 {
-                    var normalizedPointCoordinates = NormalizeCoordinates(new Coordinates { x = snakes[index].Pts[pointIndex].Xx, y = snakes[index].Pts[pointIndex].Yy }, anchorPoint, angleChange);
-                    snakes[index].Pts[pointIndex].Xx = normalizedPointCoordinates.x;
-                    snakes[index].Pts[pointIndex].Yy = normalizedPointCoordinates.y;
+                    var normalizedPointCoordinates = NormalizeCoordinates(new Coordinates { X = snakes[index].Pts[pointIndex].Xx, Y = snakes[index].Pts[pointIndex].Yy }, anchorPoint, angleChange);
+                    snakes[index].Pts[pointIndex].Xx = normalizedPointCoordinates.X;
+                    snakes[index].Pts[pointIndex].Yy = normalizedPointCoordinates.Y;
                 }
             }
 
@@ -71,9 +71,9 @@ namespace SlitherProcessor
 
             for(int index = 0; index < snake.Pts.Count; index++)
             {
-                var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = snake.Pts[index].Xx, y = snake.Pts[index].Yy }, pointChange, angleChange);
-                snake.Pts[index].Xx = normalizedCoordinates.x;
-                snake.Pts[index].Yy = normalizedCoordinates.y;
+                var normalizedCoordinates = NormalizeCoordinates(new Coordinates { X = snake.Pts[index].Xx, Y = snake.Pts[index].Yy }, pointChange, angleChange);
+                snake.Pts[index].Xx = normalizedCoordinates.X;
+                snake.Pts[index].Yy = normalizedCoordinates.Y;
             }
 
             return snake;
@@ -85,9 +85,9 @@ namespace SlitherProcessor
             {
                 if (foods[index] != null)
                 {
-                    var normalizedCoordinates = NormalizeCoordinates(new Coordinates { x = foods[index].Xx, y = foods[index].Yy }, pointChange, angleChange);
-                    foods[index].Xx = normalizedCoordinates.x;
-                    foods[index].Yy = normalizedCoordinates.y;
+                    var normalizedCoordinates = NormalizeCoordinates(new Coordinates { X = foods[index].Xx, Y = foods[index].Yy }, pointChange, angleChange);
+                    foods[index].Xx = normalizedCoordinates.X;
+                    foods[index].Yy = normalizedCoordinates.Y;
                 }
             }
             
@@ -96,15 +96,15 @@ namespace SlitherProcessor
 
         private Coordinates NormalizeCoordinates(Coordinates sourcePoint, Coordinates pointChange, double angleChange)
         {
-            var shiftedCoordinates = new Coordinates { x = sourcePoint.x - pointChange.x, y = sourcePoint.y - pointChange.y };
+            var shiftedCoordinates = new Coordinates { X = sourcePoint.X - pointChange.X, Y = sourcePoint.Y - pointChange.Y };
             return RotateCoordinates(shiftedCoordinates, angleChange);
         }
 
         private Coordinates RotateCoordinates(Coordinates shiftedCoordinates, double angleChange)
         {
-            var x = (shiftedCoordinates.x * Math.Cos(angleChange)) - (shiftedCoordinates.y * Math.Sin(angleChange));
-            var y = (shiftedCoordinates.y * Math.Cos(angleChange)) + (shiftedCoordinates.x * Math.Sin(angleChange));
-            return new Coordinates { x = Math.Round(x), y = Math.Round(y) };
+            var x = (shiftedCoordinates.X * Math.Cos(angleChange)) - (shiftedCoordinates.Y * Math.Sin(angleChange));
+            var y = (shiftedCoordinates.Y * Math.Cos(angleChange)) + (shiftedCoordinates.X * Math.Sin(angleChange));
+            return new Coordinates { X = Math.Round(x), Y = Math.Round(y) };
         }
     }
 }

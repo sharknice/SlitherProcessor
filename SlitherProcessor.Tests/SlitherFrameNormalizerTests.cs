@@ -148,7 +148,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = 0;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(21600, normalizedFrame.WorldCenter.x);
+            Assert.Equal(21600, normalizedFrame.WorldCenter.X);
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = 0;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(21600, normalizedFrame.WorldCenter.y);
+            Assert.Equal(21600, normalizedFrame.WorldCenter.Y);
         }
 
         [Fact]
@@ -170,7 +170,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = 0;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(0, normalizedFrame.WorldCenter.x);
+            Assert.Equal(0, normalizedFrame.WorldCenter.X);
         }
 
         [Fact]
@@ -181,7 +181,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = 0;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(0, normalizedFrame.WorldCenter.y);
+            Assert.Equal(0, normalizedFrame.WorldCenter.Y);
         }
 
         [Fact]
@@ -192,7 +192,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = 0;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(-21600, normalizedFrame.WorldCenter.x);
+            Assert.Equal(-21600, normalizedFrame.WorldCenter.X);
         }
 
         [Fact]
@@ -203,7 +203,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = 0;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(-21600, normalizedFrame.WorldCenter.y);
+            Assert.Equal(-21600, normalizedFrame.WorldCenter.Y);
         }
 
         [Fact]
@@ -214,7 +214,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = Math.PI;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(0, normalizedFrame.WorldCenter.x);
+            Assert.Equal(0, normalizedFrame.WorldCenter.X);
         }
 
         [Fact]
@@ -225,7 +225,7 @@ namespace SlitherProcessor.Tests
             _slitherFrame.Snake.Ang = Math.PI;
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(0, normalizedFrame.WorldCenter.y);
+            Assert.Equal(0, normalizedFrame.WorldCenter.Y);
         }
 
         [Fact]

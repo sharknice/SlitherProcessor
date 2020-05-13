@@ -25,7 +25,7 @@ namespace SlitherProcessor.Tests
             var snakesString = File.ReadAllText("snakes.json");
             frame.Snakes = JsonConvert.DeserializeObject<List<Snake>>(snakesString);
 
-            frame.WorldCenter = new Coordinates { x = 21600, y = 21600 };
+            frame.WorldCenter = new Coordinates { X = 21600, Y = 21600 };
 
             return frame;
         }
