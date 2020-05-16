@@ -14,7 +14,9 @@ namespace SlitherProcessor.Tests
             _collisionMapResolutionProcessor = new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService())));
 
             var testFrame = new TestFrame();
-            _slitherFrame = testFrame.GetTestFrame();
+            var slitherTestFrame = testFrame.GetTestFrame();
+            var normalizer = new SlitherFrameNormalizer();
+            _slitherFrame = normalizer.NormalizeFrame(slitherTestFrame);
         }
 
         [Fact]

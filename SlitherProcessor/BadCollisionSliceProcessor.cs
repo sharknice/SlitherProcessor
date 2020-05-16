@@ -59,15 +59,9 @@ namespace SlitherProcessor
 
         private double GetBoundryDistance(Coordinates worldCenter, double selfRadius, double angleStart, double angleEnd, int distanceStep)
         {
-            // TODO: collision with circle from world center with radius worldRadius
-            // return the closer angle of start and end
-            // given center point and radius of circle, starting point and angle of vector inside the circle.  Find the intersection
-            // (x - h)²+(mx + b - k)²= r
-            // solve for x, plug in to get y
-            
-            var start = FindLineCircleIntersections(worldCenter, angleStart);
+            var start = GetWorldEndPoint(worldCenter, angleStart);
             var distance = Math.Sqrt(Math.Pow(start.X, 2) + Math.Pow(start.Y, 2));
-            var end = FindLineCircleIntersections(worldCenter, angleEnd);
+            var end = GetWorldEndPoint(worldCenter, angleEnd);
             var endDistance = Math.Sqrt(Math.Pow(end.X, 2) + Math.Pow(end.Y, 2));
             if (endDistance < distance)
             {
@@ -78,7 +72,7 @@ namespace SlitherProcessor
             return Math.Round(distance / distanceStep, 0) * distanceStep;
         }
 
-        private Coordinates FindLineCircleIntersections(Coordinates worldCenter, double angle)
+        private Coordinates GetWorldEndPoint(Coordinates worldCenter, double angle)
         {
             double dx = Math.Sin(angle) * 100.0;
             double dy = Math.Cos(angle) * 100.0;
