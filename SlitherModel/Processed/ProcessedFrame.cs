@@ -8,5 +8,6 @@ namespace SlitherModel.Processed
         public int SnakeLength { get; set; }
         public Outcome Outcome { get; set; }
         public CollisionMap CollisionMap { get; set; }
+        public double SnakeAngle { get; set; }
     }
 }

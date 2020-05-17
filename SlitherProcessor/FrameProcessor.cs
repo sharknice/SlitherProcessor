@@ -22,6 +22,18 @@ namespace SlitherProcessor
             processedFrame.CollisionMap = _collisionMapProcessor.ProcessCollision(frames[index]);
             processedFrame.SnakeLength = frames[index].SnakeLength;
             processedFrame.Time = frames[index].Time;
+            processedFrame.SnakeAngle = frames[index].Snake.Ang;
+
+            return processedFrame;
+        }
+
+        public ProcessedFrame ProcessSingleFrame(SlitherFrame slitherFrame)
+        {
+            var processedFrame = new ProcessedFrame();
+            processedFrame.CollisionMap = _collisionMapProcessor.ProcessCollision(slitherFrame);
+            processedFrame.SnakeLength = slitherFrame.SnakeLength;
+            processedFrame.Time = slitherFrame.Time;
+            processedFrame.SnakeAngle = slitherFrame.Snake.Ang;
 
             return processedFrame;
         }

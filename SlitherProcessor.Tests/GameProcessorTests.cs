@@ -21,10 +21,11 @@ namespace SlitherProcessor.Tests
             _sourceGame = new Game();
             _sourceGame.Id = "test123";
 
+            var snake = new Snake { Ang = 0 };
             _sourceGame.Frames = new List<SlitherFrame>();
-            _sourceGame.Frames.Add(new SlitherFrame { Kills = 0, SnakeLength = 10, Time = DateTime.Now - TimeSpan.FromSeconds(60) });
-            _sourceGame.Frames.Add(new SlitherFrame { Kills = 0, SnakeLength = 50, Time = DateTime.Now - TimeSpan.FromSeconds(30) });
-            _sourceGame.Frames.Add(new SlitherFrame { Kills = 2, SnakeLength = 105, Time = DateTime.Now });
+            _sourceGame.Frames.Add(new SlitherFrame { Kills = 0, SnakeLength = 10, Time = DateTime.Now - TimeSpan.FromSeconds(60), Snake = snake });
+            _sourceGame.Frames.Add(new SlitherFrame { Kills = 0, SnakeLength = 50, Time = DateTime.Now - TimeSpan.FromSeconds(30), Snake = snake });
+            _sourceGame.Frames.Add(new SlitherFrame { Kills = 2, SnakeLength = 105, Time = DateTime.Now, Snake = snake });
 
             _processedGame = _gameProcessor.ProcessGame(_sourceGame);
         }
