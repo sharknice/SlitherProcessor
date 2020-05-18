@@ -1,6 +1,5 @@
 ﻿using SlitherModel.Processed;
 using SlitherModel.Source;
-using System;
 using System.Collections.Generic;
 
 namespace SlitherProcessor
@@ -23,9 +22,9 @@ namespace SlitherProcessor
         {
             return new Outcome
             {
-                ImmediateTerm = _outcomeScoreProcessor.ProcessOutcomeScore(frames, index, TimeSpan.FromSeconds(1)),
-                ShortTerm = _outcomeScoreProcessor.ProcessOutcomeScore(frames, index, TimeSpan.FromSeconds(10)),
-                LongTerm = _outcomeScoreProcessor.ProcessOutcomeScore(frames, index, TimeSpan.FromSeconds(60)),
+                ImmediateTerm = _outcomeScoreProcessor.ProcessOutcomeScore(frames, index, 1000),
+                ShortTerm = _outcomeScoreProcessor.ProcessOutcomeScore(frames, index, 10000),
+                LongTerm = _outcomeScoreProcessor.ProcessOutcomeScore(frames, index, 60000),
                 LifeTerm = _outcomeScoreProcessor.ProcessFinalOutcomeScore(frames, index)
             };
         }

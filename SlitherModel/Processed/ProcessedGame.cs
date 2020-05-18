@@ -8,7 +8,7 @@ namespace SlitherModel.Processed
     {
         public string SourceId { get; set; }
         public List<ProcessedFrame> Frames { get; set; }
-        public TimeSpan GameLength { get; set; }
+        public long GameLength { get; set; }
         public int SnakeLength { get; set; }
         public int SnakeKills { get; set; }
     }

@@ -1,6 +1,5 @@
 ﻿using SlitherModel.Processed;
 using SlitherModel.Source;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace SlitherProcessor
 {
     public class OutcomeScoreProcessor
     {
-        public OutcomeScore ProcessOutcomeScore(List<SlitherFrame> sourceFrames, int sourceFrameIndex, TimeSpan timeSpan)
+        public OutcomeScore ProcessOutcomeScore(List<SlitherFrame> sourceFrames, int sourceFrameIndex, long timeSpan)
         {
             var sourceFrame = sourceFrames[sourceFrameIndex];
             var outcomeFrame = GetOutcomeFrame(sourceFrames, sourceFrameIndex, timeSpan);
@@ -42,7 +41,7 @@ namespace SlitherProcessor
         }
 
         // TODO: might want to optimize this search
-        private SlitherFrame GetOutcomeFrame(List<SlitherFrame> sourceFrames, int sourceFrameIndex, TimeSpan timeSpan)
+        private SlitherFrame GetOutcomeFrame(List<SlitherFrame> sourceFrames, int sourceFrameIndex, long timeSpan)
         {
             var targetTime = sourceFrames[sourceFrameIndex].Time + timeSpan;
 

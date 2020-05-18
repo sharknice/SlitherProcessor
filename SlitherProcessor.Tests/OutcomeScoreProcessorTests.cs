@@ -21,10 +21,10 @@ namespace SlitherProcessor.Tests
         void KillScoreExactTime()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
-            frames.Add(new SlitherFrame { Kills = 1, Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { Kills = 2, Time = DateTime.Now + TimeSpan.FromSeconds(60) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 0, TimeSpan.FromSeconds(3));
+            frames.Add(new SlitherFrame { Kills = 0, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { Kills = 1, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { Kills = 2, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 60000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 0, 3000);
 
             Assert.Equal(1, _outcomeScore.Kills);
         }
@@ -33,10 +33,10 @@ namespace SlitherProcessor.Tests
         void KillScoreAfterTime()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
-            frames.Add(new SlitherFrame { Kills = 1, Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { Kills = 2, Time = DateTime.Now + TimeSpan.FromSeconds(60) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 0, TimeSpan.FromSeconds(3));
+            frames.Add(new SlitherFrame { Kills = 0, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { Kills = 1, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { Kills = 2, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 60000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 0, 3000);
 
             Assert.Equal(1, _outcomeScore.Kills);
         }
@@ -45,13 +45,13 @@ namespace SlitherProcessor.Tests
         void KillScoreMiddleIndex()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
-            frames.Add(new SlitherFrame { Kills = 1, Time = DateTime.Now + TimeSpan.FromSeconds(1) });
-            frames.Add(new SlitherFrame { Kills = 2, Time = DateTime.Now + TimeSpan.FromSeconds(2) });
-            frames.Add(new SlitherFrame { Kills = 3, Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { Kills = 4, Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { Kills = 5, Time = DateTime.Now + TimeSpan.FromSeconds(5) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 1, TimeSpan.FromSeconds(3));
+            frames.Add(new SlitherFrame { Kills = 0, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { Kills = 1, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 1000 });
+            frames.Add(new SlitherFrame { Kills = 2, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 2000 });
+            frames.Add(new SlitherFrame { Kills = 3, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { Kills = 4, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { Kills = 5, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 5000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 1, 3000);
 
             Assert.Equal(3, _outcomeScore.Kills);
         }
@@ -60,13 +60,13 @@ namespace SlitherProcessor.Tests
         void KillScoreExceedsTime()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { Kills = 0, Time = DateTime.Now });
-            frames.Add(new SlitherFrame { Kills = 1, Time = DateTime.Now + TimeSpan.FromSeconds(1) });
-            frames.Add(new SlitherFrame { Kills = 2, Time = DateTime.Now + TimeSpan.FromSeconds(2) });
-            frames.Add(new SlitherFrame { Kills = 3, Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { Kills = 4, Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { Kills = 5, Time = DateTime.Now + TimeSpan.FromSeconds(5) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 2, TimeSpan.FromSeconds(10));
+            frames.Add(new SlitherFrame { Kills = 0, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { Kills = 1, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 1000 });
+            frames.Add(new SlitherFrame { Kills = 2, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 2000 });
+            frames.Add(new SlitherFrame { Kills = 3, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { Kills = 4, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { Kills = 5, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 5000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 2, 10000);
 
             Assert.Equal(3, _outcomeScore.Kills);
         }
@@ -75,13 +75,13 @@ namespace SlitherProcessor.Tests
         void GrowthScore()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { SnakeLength = 0, Time = DateTime.Now });
-            frames.Add(new SlitherFrame { SnakeLength = 1, Time = DateTime.Now + TimeSpan.FromSeconds(1) });
-            frames.Add(new SlitherFrame { SnakeLength = 2, Time = DateTime.Now + TimeSpan.FromSeconds(2) });
-            frames.Add(new SlitherFrame { SnakeLength = 3, Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { SnakeLength = 4, Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { SnakeLength = 5, Time = DateTime.Now + TimeSpan.FromSeconds(5) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 1, TimeSpan.FromSeconds(3));
+            frames.Add(new SlitherFrame { SnakeLength = 0, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { SnakeLength = 1, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 1000 });
+            frames.Add(new SlitherFrame { SnakeLength = 2, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 2000 });
+            frames.Add(new SlitherFrame { SnakeLength = 3, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { SnakeLength = 4, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { SnakeLength = 5, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 5000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 1, 3000);
 
             Assert.Equal(3, _outcomeScore.Growth);
         }
@@ -90,13 +90,13 @@ namespace SlitherProcessor.Tests
         void GrowthScoreExceedsTime()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { SnakeLength = 0, Time = DateTime.Now });
-            frames.Add(new SlitherFrame { SnakeLength = 1, Time = DateTime.Now + TimeSpan.FromSeconds(1) });
-            frames.Add(new SlitherFrame { SnakeLength = 2, Time = DateTime.Now + TimeSpan.FromSeconds(2) });
-            frames.Add(new SlitherFrame { SnakeLength = 3, Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { SnakeLength = 4, Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { SnakeLength = 5, Time = DateTime.Now + TimeSpan.FromSeconds(5) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 2, TimeSpan.FromSeconds(10));
+            frames.Add(new SlitherFrame { SnakeLength = 0, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { SnakeLength = 1, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 1000 });
+            frames.Add(new SlitherFrame { SnakeLength = 2, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 2000 });
+            frames.Add(new SlitherFrame { SnakeLength = 3, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { SnakeLength = 4, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { SnakeLength = 5, Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 5000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 2, 10000);
 
             Assert.Equal(3, _outcomeScore.Growth);
         }
@@ -105,13 +105,13 @@ namespace SlitherProcessor.Tests
         void AliveInMiddle()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { Time = DateTime.Now });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(1) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(2) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(5) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 1, TimeSpan.FromSeconds(3));
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 1000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 2000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 5000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 1, 3000);
 
             Assert.True(_outcomeScore.Alive);
         }
@@ -120,13 +120,13 @@ namespace SlitherProcessor.Tests
         void DeadAtEnd()
         {
             var frames = new List<SlitherFrame>();
-            frames.Add(new SlitherFrame { Time = DateTime.Now });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(1) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(2) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(3) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(4) });
-            frames.Add(new SlitherFrame { Time = DateTime.Now + TimeSpan.FromSeconds(5) });
-            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 2, TimeSpan.FromSeconds(10));
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 1000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 2000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 3000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 4000 });
+            frames.Add(new SlitherFrame { Time = DateTimeOffset.Now.ToUnixTimeMilliseconds() + 5000 });
+            _outcomeScore = _outcomeScoreProcessor.ProcessOutcomeScore(frames, 2, 10000);
 
             Assert.False(_outcomeScore.Alive);
         }

@@ -15,11 +15,10 @@ namespace SlitherProcessorApi
         private readonly string DatabaseSourceFolder;
         private readonly GameProcessor GameProcessor;
 
-        public GameManager(GameProcessor gameProcessor, string databaseFolder)
+        public GameManager(GameProcessor gameProcessor, string sourceDatabaseFolder)
         {
             GameProcessor = gameProcessor;
-            DatabaseSourceFolder = databaseFolder;
-            GameProcessor = new GameProcessor(new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer())));
+            DatabaseSourceFolder = sourceDatabaseFolder;
         }
 
         public string StartGame(string source)
@@ -35,11 +34,14 @@ namespace SlitherProcessorApi
         {
             var game = ActiveGameDatabase.ActiveGames.First(game => game.Id == id);
 
-            var processedGame = GameProcessor.ProcessGame(game);
-            GameDatabase.AddGame(processedGame);
+            if(game.Frames.Count > 0)
+            {
+                var processedGame = GameProcessor.ProcessGame(game);
+                GameDatabase.AddGame(processedGame);
 
-            string json = JsonConvert.SerializeObject(game);
-            File.WriteAllText(DatabaseSourceFolder + "\\" + game.Id + ".json", json, Encoding.UTF8);
+                string json = JsonConvert.SerializeObject(game);
+                File.WriteAllText(DatabaseSourceFolder + "\\" + game.Id + ".json", json, Encoding.UTF8);
+            }
 
             ActiveGameDatabase.ActiveGames.RemoveAll(game => game.Id == id);
 

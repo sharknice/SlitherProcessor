@@ -12,7 +12,7 @@ namespace SlitherProcessor.Tests
         public SlitherFrame GetTestFrame()
         {
             var frame = new SlitherFrame();
-            frame.Time = DateTime.Now;
+            frame.Time = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             frame.Kills = 3;
             frame.SnakeLength = 2500;
 

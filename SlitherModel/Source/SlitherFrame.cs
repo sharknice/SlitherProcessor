@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SlitherModel.Source
 {
     public class SlitherFrame
     {
-        public DateTime Time { get; set; }
+        public long Time { get; set; }
         public Snake Snake { get; set; }
         public List<Snake> Snakes { get; set; }
         public List<Food> Foods { get; set; }
