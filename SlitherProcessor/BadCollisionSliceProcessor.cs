@@ -49,7 +49,7 @@ namespace SlitherProcessor
 
             collision.Add(new Boundry { Distance = GetBoundryDistance(slitherFrame.WorldCenter, selfRadius, angleStart, angleEnd, distanceStep) });
 
-            return collision;
+            return collision.OrderBy(c => c.Distance).ToList();
         }
 
         private double GetSnakeRadius(Snake snake)

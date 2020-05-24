@@ -1,6 +1,7 @@
 ﻿using SlitherModel.Processed;
 using SlitherModel.Source;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SlitherProcessor
 {
@@ -29,7 +30,7 @@ namespace SlitherProcessor
                 }
             }
 
-            return foods;
+            return foods.OrderBy(c => c.Distance).ToList();
         }
     }
 }

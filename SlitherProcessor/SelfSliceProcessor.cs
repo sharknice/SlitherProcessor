@@ -29,7 +29,7 @@ namespace SlitherProcessor
                 }
             }
 
-            return collision;
+            return collision.OrderBy(c => c.Distance).ToList();
         }
     }
 }
