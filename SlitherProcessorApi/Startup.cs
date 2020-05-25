@@ -38,7 +38,7 @@ namespace SlitherProcessorApi
 
             var frameProcessor = new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer()));
             var gameManager = new GameManager(new GameProcessor(frameProcessor), sourceDatabaseFolder);
-            var slitherPlayer = new SlitherPlayer(frameProcessor);
+            var slitherPlayer = new SlitherPlayer(frameProcessor, new ProcessedFrameMatchAnalyzer(new CollisionMapMatchAnalyzer(new SliceMatchAnalyzer(new CollisionListMatchAnalyzer()))));
             services.AddSingleton(gameManager);
             services.AddSingleton(slitherPlayer);
 

@@ -17,7 +17,7 @@ namespace SlitherBrain
             var food = CollisionListMatchAnalyzer.GetMatchConfidence(sourceSlice.FoodCollisions, targetSlice.FoodCollisions);
             var self = CollisionListMatchAnalyzer.GetMatchConfidence(sourceSlice.SelfCollisions, targetSlice.SelfCollisions);
 
-            return (bad * 0.75) + (food * 0.2) + (self * 0.5);
+            return (bad * 0.75) + (food * 0.2) + (self * 0.05);
         }
     }
 }

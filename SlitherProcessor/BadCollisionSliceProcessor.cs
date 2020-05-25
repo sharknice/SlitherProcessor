@@ -85,7 +85,7 @@ namespace SlitherProcessor
 
             double det = B * B - 4 * A * C;
 
-            double t = (float)((-B + Math.Sqrt(det)) / (2 * A));
+            double t = (float)((-B + Math.Sqrt(Math.Abs(det))) / (2 * A));
             var intersection1 = new Coordinates { X = t * dx, Y = t * dy };
             t = (float)((-B - Math.Sqrt(det)) / (2 * A));
             var intersection2 = new Coordinates { X = t * dx, Y = t * dy };
