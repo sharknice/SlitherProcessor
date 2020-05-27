@@ -5,7 +5,6 @@ using SlitherProcessor;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace SlitherProcessorApi
@@ -23,18 +22,19 @@ namespace SlitherProcessorApi
 
         public string StartGame(string source)
         {
-            var id = $"{source}-{DateTime.Now.Ticks.ToString()}";
+            var id = $"{source}-{DateTime.Now.Ticks}";
             var game = new Game { Id = id, Frames = new List<SlitherFrame>() };
-            ActiveGameDatabase.ActiveGames.Add(game);
+            ActiveGameDatabase.ActiveGames.TryAdd(id, game);
 
             return id;
         }
 
         public bool EndGame(string id)
         {
-            var game = ActiveGameDatabase.ActiveGames.First(game => game.Id == id);
+            Game game;
+            bool success = ActiveGameDatabase.ActiveGames.TryRemove(id, out game);
 
-            if(game.Frames.Count > 0)
+            if(success && game.Frames.Count > 0)
             {
                 var processedGame = GameProcessor.ProcessGame(game);
                 GameDatabase.AddGame(processedGame);
@@ -43,9 +43,7 @@ namespace SlitherProcessorApi
                 File.WriteAllText(DatabaseSourceFolder + "\\" + game.Id + ".json", json, Encoding.UTF8);
             }
 
-            ActiveGameDatabase.ActiveGames.RemoveAll(game => game.Id == id);
-
-            return true;
+            return success;
         }
     }
 }

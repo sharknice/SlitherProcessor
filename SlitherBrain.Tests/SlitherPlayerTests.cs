@@ -24,7 +24,7 @@ namespace SlitherBrain.Tests
                 NullValueHandling = NullValueHandling.Ignore,
             });
 
-            SlitherPlayer = new SlitherPlayer(new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer())), new ProcessedFrameMatchAnalyzer(new CollisionMapMatchAnalyzer(new SliceMatchAnalyzer(new CollisionListMatchAnalyzer()))));
+            SlitherPlayer = new SlitherPlayer(new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer())), new ProcessedFrameMatchAnalyzer(new CollisionMapMatchAnalyzer(new SliceMatchAnalyzer(new CollisionListMatchAnalyzer()))), new SlitherFrameNormalizer());
 
             var frameProcessor = new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer()));
             var gameProcessor = new GameProcessor(frameProcessor);
@@ -39,7 +39,7 @@ namespace SlitherBrain.Tests
             var matchingFrame = GameDatabase.Games[0].Frames[5];
 
             var result = SlitherPlayer.PlayGame("test", frame, 250);
-            Assert.Equal(matchingFrame.Outcome, result.PredictedOutCome);
+            Assert.Equal(matchingFrame.Outcome, result.PredictedOutcome);
         }
 
         [Fact]

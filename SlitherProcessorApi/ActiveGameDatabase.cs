@@ -1,10 +1,10 @@
 ﻿using SlitherModel.Source;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace SlitherProcessorApi
 {
     public class ActiveGameDatabase
     {
-        public static List<Game> ActiveGames { get; set; }
+        public static ConcurrentDictionary<string, Game> ActiveGames { get; set; }
     }
 }

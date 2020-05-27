@@ -65,7 +65,7 @@ namespace SlitherProcessor
 
         private Snake GetNormalizedSnake(Snake snake, Coordinates pointChange, double angleChange)
         {
-            snake.Ang = 0;
+            //snake.Ang = 0;
             snake.Xx = 0;
             snake.Yy = 0;
 

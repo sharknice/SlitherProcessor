@@ -7,7 +7,7 @@ using SlitherBrain;
 using SlitherDatabase;
 using SlitherModel.Source;
 using SlitherProcessor;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace SlitherProcessorApi
 {
@@ -24,7 +24,7 @@ namespace SlitherProcessorApi
             GameDatabase.DatabaseFolder = configuration["DatabaseFolder"];
             GameDatabase.LoadGames();
 
-            ActiveGameDatabase.ActiveGames = new List<Game>();
+            ActiveGameDatabase.ActiveGames = new ConcurrentDictionary<string, Game>();
         }
 
         public IConfiguration Configuration { get; }
@@ -38,7 +38,7 @@ namespace SlitherProcessorApi
 
             var frameProcessor = new FrameProcessor(new OutcomeProcessor(new OutcomeScoreProcessor()), new CollisionMapProcessor(new CollisionMapResolutionProcessor(new CollisionSliceProcessor(new FoodSliceProcessor(new CollisionService()), new BadCollisionSliceProcessor(new CollisionService()), new SelfSliceProcessor(new CollisionService()))), new SlitherFrameNormalizer()));
             var gameManager = new GameManager(new GameProcessor(frameProcessor), sourceDatabaseFolder);
-            var slitherPlayer = new SlitherPlayer(frameProcessor, new ProcessedFrameMatchAnalyzer(new CollisionMapMatchAnalyzer(new SliceMatchAnalyzer(new CollisionListMatchAnalyzer()))));
+            var slitherPlayer = new SlitherPlayer(frameProcessor, new ProcessedFrameMatchAnalyzer(new CollisionMapMatchAnalyzer(new SliceMatchAnalyzer(new CollisionListMatchAnalyzer()))), new SlitherFrameNormalizer());
             services.AddSingleton(gameManager);
             services.AddSingleton(slitherPlayer);
 

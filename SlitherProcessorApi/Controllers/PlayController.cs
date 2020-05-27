@@ -29,7 +29,7 @@ namespace SlitherProcessorApi.Controllers
         [Route("UpdateGame/{id}/{millisecondsToAction}")]
         public GameDecision PlayGame(string id, int millisecondsToAction, [FromBody]SlitherFrame slitherFrame)
         {
-            ActiveGameDatabase.ActiveGames.First(game => game.Id == id).Frames.Add(slitherFrame);
+            ActiveGameDatabase.ActiveGames[id].Frames.Add(slitherFrame);
 
             return SlitherPlayer.PlayGame(id, slitherFrame, millisecondsToAction);
         }

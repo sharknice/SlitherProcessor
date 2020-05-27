@@ -23,6 +23,7 @@ namespace SlitherProcessor
             processedFrame.SnakeLength = frames[index].SnakeLength;
             processedFrame.Time = frames[index].Time;
             processedFrame.SnakeAngle = frames[index].Snake.Ang;
+            processedFrame.SnakeSprinting = frames[index].Snake.Sp > 10;
 
             return processedFrame;
         }

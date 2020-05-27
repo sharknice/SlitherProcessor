@@ -7,5 +7,6 @@
         public Outcome Outcome { get; set; }
         public CollisionMap CollisionMap { get; set; }
         public double SnakeAngle { get; set; }
+        public bool SnakeSprinting { get; set; }
     }
 }

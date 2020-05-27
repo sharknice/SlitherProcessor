@@ -14,13 +14,14 @@ namespace SlitherBrain
 
         public double GetMatchConfidence(List<CollisionSlice> sourceSlices, List<CollisionSlice> targetSlices)
         {
-            var maximumSliceValue = 1.0 / sourceSlices.Count;
+            var maximumMatchValue = 0.0;
             var matchValue = 0.0;
             for(var index = 0; index < sourceSlices.Count; index++)
             {
-                matchValue += SliceMatchAnalyzer.GetMatchConfidence(sourceSlices[index], targetSlices[index]) * maximumSliceValue; 
+                maximumMatchValue += SliceMatchAnalyzer.GetMaximumMatchValue(sourceSlices[index]);
+                matchValue += SliceMatchAnalyzer.GetMatchConfidence(sourceSlices[index], targetSlices[index]); 
             }
-            return matchValue;
+            return matchValue / maximumMatchValue;
         }
     }
 }

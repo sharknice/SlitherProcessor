@@ -19,11 +19,11 @@ namespace SlitherProcessor.Tests
         }
 
         [Fact]
-        void SnakeAngleZero()
+        void PreserveSnakeAngle()
         {
             var normalizedFrame = _slitherFrameNormalizer.NormalizeFrame(_slitherFrame);
 
-            Assert.Equal(0, normalizedFrame.Snake.Ang);
+            Assert.NotEqual(0, normalizedFrame.Snake.Ang);
         }
 
         [Fact]

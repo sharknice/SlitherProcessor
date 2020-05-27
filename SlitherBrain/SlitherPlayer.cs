@@ -8,16 +8,19 @@ namespace SlitherBrain
     {
         private readonly FrameProcessor FrameProcessor;
         private readonly ProcessedFrameMatchAnalyzer ProcessedFrameMatchAnalyzer;
+        private readonly SlitherFrameNormalizer SlitherFrameNormalizer;
 
-        public SlitherPlayer(FrameProcessor frameProcessor, ProcessedFrameMatchAnalyzer processedFrameMatchAnalyzer)
+        public SlitherPlayer(FrameProcessor frameProcessor, ProcessedFrameMatchAnalyzer processedFrameMatchAnalyzer, SlitherFrameNormalizer slitherFrameNormalizer)
         {
             FrameProcessor = frameProcessor;
             ProcessedFrameMatchAnalyzer = processedFrameMatchAnalyzer;
+            SlitherFrameNormalizer = slitherFrameNormalizer;
         }
 
         public GameDecision PlayGame(string id, SlitherFrame slitherFrame, int millisecondsToAction)
         {
-            var processedFrame = FrameProcessor.ProcessSingleFrame(slitherFrame);
+            var normalizedFrame = SlitherFrameNormalizer.NormalizeFrame(slitherFrame);
+            var processedFrame = FrameProcessor.ProcessSingleFrame(normalizedFrame);
 
             var decision = new GameDecision { MatchConfidence = 0 };
             var killDecision = new GameDecision { MatchConfidence = 0 };
@@ -30,30 +33,32 @@ namespace SlitherBrain
 
                     if (frame.Outcome.ShortTerm.Alive)
                     {
-                        double? actionAngle = null;
+                        ActionResult actionResult = null;
                         var confidence = ProcessedFrameMatchAnalyzer.GetMatchConfidence(processedFrame, frame);
-                        if(confidence > decision.MatchConfidence)
+                        if (confidence > decision.MatchConfidence)
                         {
-                            actionAngle = GetActionAngle(millisecondsToAction, gameIndex, frameIndex);
+                            actionResult = GetActionResult(millisecondsToAction, gameIndex, frameIndex);
 
                             decision.MatchConfidence = confidence;
-                            decision.PredictedOutCome = frame.Outcome;
-                            decision.TargetAngle = actionAngle.Value;
+                            decision.PredictedOutcome = frame.Outcome;
+                            decision.TargetAngle = actionResult.Angle;
+                            decision.Sprint = actionResult.Sprinting;
                         }
-                        if(confidence > killDecision.MatchConfidence && frame.Outcome.ShortTerm.Kills > 0)
+                        if (confidence > killDecision.MatchConfidence && frame.Outcome.ShortTerm.Kills > 0)
                         {
-                            if(actionAngle == null)
+                            if (actionResult == null)
                             {
-                                actionAngle = GetActionAngle(millisecondsToAction, gameIndex, frameIndex);
+                                actionResult = GetActionResult(millisecondsToAction, gameIndex, frameIndex);
                             }
 
                             killDecision.MatchConfidence = confidence;
-                            killDecision.PredictedOutCome = frame.Outcome;
-                            killDecision.TargetAngle = actionAngle.Value;
+                            killDecision.PredictedOutcome = frame.Outcome;
+                            killDecision.TargetAngle = actionResult.Angle;
+                            killDecision.Sprint = actionResult.Sprinting;
                         }
                     }
                 }
-                
+
             }
 
             // loop through every frame in the database
@@ -71,18 +76,26 @@ namespace SlitherBrain
             return decision;
         }
 
-        private double GetActionAngle(int millisecondsToAction, int gameIndex, int frameIndex)
+        private ActionResult GetActionResult(int millisecondsToAction, int gameIndex, int frameIndex)
         {
-            var angle = GameDatabase.Games[gameIndex].Frames[frameIndex].SnakeAngle;
             int framesAhead = 1;
-            while(GameDatabase.Games[gameIndex].Frames.Count > frameIndex + framesAhead 
+            var angle = GameDatabase.Games[gameIndex].Frames[frameIndex + framesAhead].SnakeAngle;
+            var sprint = GameDatabase.Games[gameIndex].Frames[frameIndex + framesAhead].SnakeSprinting;
+            while (GameDatabase.Games[gameIndex].Frames.Count > frameIndex + framesAhead
                 && GameDatabase.Games[gameIndex].Frames[frameIndex + framesAhead].Time - GameDatabase.Games[gameIndex].Frames[frameIndex].Time < millisecondsToAction)
             {
                 angle = GameDatabase.Games[gameIndex].Frames[frameIndex + framesAhead].SnakeAngle;
+                sprint = GameDatabase.Games[gameIndex].Frames[frameIndex + framesAhead].SnakeSprinting;
                 framesAhead++;
             }
 
-            return GameDatabase.Games[gameIndex].Frames[frameIndex].SnakeAngle - angle; // TODO: should this be reversed?
+            return new ActionResult { Angle = GameDatabase.Games[gameIndex].Frames[frameIndex].SnakeAngle - angle, Sprinting = sprint }; // TODO: should angle be reversed? the angle is always 0, need to fix that
         }
+    }
+
+    public class ActionResult
+    {
+        public double Angle { get; set; }
+        public bool Sprinting { get; set; }
     }
 }
