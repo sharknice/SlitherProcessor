@@ -12,7 +12,6 @@ namespace SlitherProcessor
                 return GetDistance(xx, yy, radius, distanceStep);
             }
 
-            // TODO: checking collision for the point with radius of circle here, probably not the right way to do it
             targetAngle = Math.Atan2(yy, xx + radius);
             if (TargetWithinSlice(targetAngle, angleStart, angleEnd))
             {

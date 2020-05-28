@@ -40,7 +40,6 @@ namespace SlitherProcessor
             };
         }
 
-        // TODO: might want to optimize this search
         private SlitherFrame GetOutcomeFrame(List<SlitherFrame> sourceFrames, int sourceFrameIndex, long timeSpan)
         {
             var targetTime = sourceFrames[sourceFrameIndex].Time + timeSpan;

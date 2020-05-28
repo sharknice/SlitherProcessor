@@ -78,7 +78,7 @@ namespace SlitherBrain
                 framesAhead++;
             }
 
-            return new ActionResult { Angle = game.Frames[frameIndex].SnakeAngle - angle, Sprinting = sprint }; // TODO: should angle be reversed? the angle is always 0, need to fix that
+            return new ActionResult { Angle = game.Frames[frameIndex].SnakeAngle - angle, Sprinting = sprint };
         }
     }
 
