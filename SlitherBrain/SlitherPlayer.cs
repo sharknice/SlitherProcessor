@@ -2,6 +2,7 @@
 using SlitherModel.Processed;
 using SlitherModel.Source;
 using SlitherProcessor;
+using System.Threading.Tasks;
 
 namespace SlitherBrain
 {
@@ -28,17 +29,47 @@ namespace SlitherBrain
 
             foreach (var game in GameDatabase.Games)
             {
-                for (var frameIndex = 0; frameIndex < game.Frames.Count; frameIndex++)
-                {
-                    var frame = game.Frames[frameIndex];
+                //for (var frameIndex = 0; frameIndex < game.Frames.Count; frameIndex++)
+                //{
+                //    var frame = game.Frames[frameIndex];
 
+                //    if (frame.Outcome.ShortTerm.Alive)
+                //    {
+                //        ActionResult actionResult = null;
+                //        var confidence = ProcessedFrameMatchAnalyzer.GetMatchConfidence(processedFrame, frame);
+                //        if (confidence > decision.MatchConfidence)
+                //        {
+                //            actionResult = GetActionResult(millisecondsToAction, game, frameIndex);
+
+                //            decision.MatchConfidence = confidence;
+                //            decision.PredictedOutcome = frame.Outcome;
+                //            decision.TargetAngle = actionResult.Angle;
+                //            decision.Sprint = actionResult.Sprinting;
+                //        }
+                //        if (confidence > killDecision.MatchConfidence && frame.Outcome.ShortTerm.Kills > 0)
+                //        {
+                //            if (actionResult == null)
+                //            {
+                //                actionResult = GetActionResult(millisecondsToAction, game, frameIndex);
+                //            }
+
+                //            killDecision.MatchConfidence = confidence;
+                //            killDecision.PredictedOutcome = frame.Outcome;
+                //            killDecision.TargetAngle = actionResult.Angle;
+                //            killDecision.Sprint = actionResult.Sprinting;
+                //        }
+                //    }
+                //}
+
+                Parallel.ForEach(game.Frames, (frame, pls, frameIndex) =>
+                {
                     if (frame.Outcome.ShortTerm.Alive)
                     {
                         ActionResult actionResult = null;
                         var confidence = ProcessedFrameMatchAnalyzer.GetMatchConfidence(processedFrame, frame);
                         if (confidence > decision.MatchConfidence)
                         {
-                            actionResult = GetActionResult(millisecondsToAction, game, frameIndex);
+                            actionResult = GetActionResult(millisecondsToAction, game, (int)frameIndex);
 
                             decision.MatchConfidence = confidence;
                             decision.PredictedOutcome = frame.Outcome;
@@ -49,7 +80,7 @@ namespace SlitherBrain
                         {
                             if (actionResult == null)
                             {
-                                actionResult = GetActionResult(millisecondsToAction, game, frameIndex);
+                                actionResult = GetActionResult(millisecondsToAction, game, (int)frameIndex);
                             }
 
                             killDecision.MatchConfidence = confidence;
@@ -58,7 +89,7 @@ namespace SlitherBrain
                             killDecision.Sprint = actionResult.Sprinting;
                         }
                     }
-                }
+                });
 
             }
 

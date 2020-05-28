@@ -29,7 +29,7 @@ namespace SlitherBrain.Tests
         }
 
         [Fact]
-        public void OutCome()
+        public void Benchmark()
         {
             var frame = SourceGame.Frames[5];
 
