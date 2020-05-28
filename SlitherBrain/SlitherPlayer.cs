@@ -29,37 +29,6 @@ namespace SlitherBrain
 
             foreach (var game in GameDatabase.Games)
             {
-                //for (var frameIndex = 0; frameIndex < game.Frames.Count; frameIndex++)
-                //{
-                //    var frame = game.Frames[frameIndex];
-
-                //    if (frame.Outcome.ShortTerm.Alive)
-                //    {
-                //        ActionResult actionResult = null;
-                //        var confidence = ProcessedFrameMatchAnalyzer.GetMatchConfidence(processedFrame, frame);
-                //        if (confidence > decision.MatchConfidence)
-                //        {
-                //            actionResult = GetActionResult(millisecondsToAction, game, frameIndex);
-
-                //            decision.MatchConfidence = confidence;
-                //            decision.PredictedOutcome = frame.Outcome;
-                //            decision.TargetAngle = actionResult.Angle;
-                //            decision.Sprint = actionResult.Sprinting;
-                //        }
-                //        if (confidence > killDecision.MatchConfidence && frame.Outcome.ShortTerm.Kills > 0)
-                //        {
-                //            if (actionResult == null)
-                //            {
-                //                actionResult = GetActionResult(millisecondsToAction, game, frameIndex);
-                //            }
-
-                //            killDecision.MatchConfidence = confidence;
-                //            killDecision.PredictedOutcome = frame.Outcome;
-                //            killDecision.TargetAngle = actionResult.Angle;
-                //            killDecision.Sprint = actionResult.Sprinting;
-                //        }
-                //    }
-                //}
 
                 Parallel.ForEach(game.Frames, (frame, pls, frameIndex) =>
                 {
@@ -92,18 +61,6 @@ namespace SlitherBrain
                 });
 
             }
-
-            // loop through every frame in the database
-            // first look at the outcome score, if it is negative, skip this frame
-            // calculate how close the frame matches
-            // weight outcome score parameters versus match closeness
-
-            // alive most important, then kills, then growth, but need to decide how much
-
-            // find the best matched frame combined with the best result, then get the next frame from that point based on frameTime, make new project for that processor
-            // decision has the angle to go (need to adjust based on the original angle and the processed, normalized angle), decision also has the OutCome from the best match and how close the match is to this game
-
-            // show the state value function (how much reward going to get in the future) and action value function graphs (how much reward for each action) on the UI?
 
             return decision;
         }
