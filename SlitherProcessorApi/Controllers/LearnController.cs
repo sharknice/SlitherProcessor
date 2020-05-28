@@ -26,9 +26,12 @@ namespace SlitherProcessorApi.Controllers
         [Route("UpdateGame/{id}")]
         public bool UpdateGame(string id, [FromBody]SlitherFrame slitherFrame)
         {
-            ActiveGameDatabase.ActiveGames[id].Frames.Add(slitherFrame);
-
-            return true;
+            if (ActiveGameDatabase.ActiveGames.ContainsKey(id))
+            {
+                ActiveGameDatabase.ActiveGames[id].Frames.Add(slitherFrame);
+                return true;
+            }
+            return false;        
         }
 
         [HttpGet]

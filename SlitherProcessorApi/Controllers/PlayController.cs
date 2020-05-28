@@ -29,8 +29,10 @@ namespace SlitherProcessorApi.Controllers
         [Route("UpdateGame/{id}/{millisecondsToAction}")]
         public GameDecision PlayGame(string id, int millisecondsToAction, [FromBody]SlitherFrame slitherFrame)
         {
-            ActiveGameDatabase.ActiveGames[id].Frames.Add(slitherFrame);
-
+            if(ActiveGameDatabase.ActiveGames.ContainsKey(id))
+            {
+                ActiveGameDatabase.ActiveGames[id].Frames.Add(slitherFrame);
+            }
             return SlitherPlayer.PlayGame(id, slitherFrame, millisecondsToAction);
         }
 

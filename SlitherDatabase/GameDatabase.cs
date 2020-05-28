@@ -1,30 +1,29 @@
 ﻿using Newtonsoft.Json;
 using SlitherModel.Processed;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SlitherDatabase
 {
     public static class GameDatabase
     {
         public static string DatabaseFolder { get; set; }
-        public static List<ProcessedGame> Games { get; private set; }
+        public static ConcurrentBag<ProcessedGame> Games { get; private set; }
 
         public static void LoadGames()
         {
-            Games = new List<ProcessedGame>();
-
-            foreach (var fileName in Directory.GetFiles(DatabaseFolder))
-            {
-                var jsonString = File.ReadAllText(fileName);
-                var game = JsonConvert.DeserializeObject<ProcessedGame>(jsonString, new JsonSerializerSettings
+            Games = new ConcurrentBag<ProcessedGame>();
+            var filePaths = Directory.GetFiles(DatabaseFolder);
+            Parallel.ForEach(filePaths, (fileName) => {
+                using (StreamReader file = File.OpenText(fileName))
                 {
-                    TypeNameHandling = TypeNameHandling.Auto,
-                    NullValueHandling = NullValueHandling.Ignore,
-                });
-                Games.Add(game);
-            }
+                    var serializer = new JsonSerializer { TypeNameHandling = TypeNameHandling.Auto };
+                    var game = (ProcessedGame)serializer.Deserialize(file, typeof(ProcessedGame));
+                    Games.Add(game);
+                }
+            });
         }
 
         public static void AddGame(ProcessedGame processedGame)
